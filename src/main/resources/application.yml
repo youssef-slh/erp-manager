@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: erp-manager
+  datasource:
+    url: jdbc:sqlserver://localhost;databaseName=erp-manager;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: 123456
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+
+app:
+  security:
+    client-id: onboarding_manager
+    client-secret: qPZ0HHVDoQ2xzPcyeTjtJRoJ6ewox2uZ
+    iam-token-host: https://localhost:8443/realms/erp-manager-dev/protocol/openid-connect/token
+  iam-host: https://localhost:8443/admin/realms/erp-manager-dev

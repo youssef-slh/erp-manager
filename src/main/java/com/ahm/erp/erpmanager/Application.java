@@ -1,13 +1,13 @@
-package com.ahm.erp.erp_manager;
+package com.ahm.erp.erpmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ErpManagerApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ErpManagerApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

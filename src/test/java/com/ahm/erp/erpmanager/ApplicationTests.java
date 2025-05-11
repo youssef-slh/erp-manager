@@ -1,10 +1,10 @@
-package com.ahm.erp.erp_manager;
+package com.ahm.erp.erpmanager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ErpManagerApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
