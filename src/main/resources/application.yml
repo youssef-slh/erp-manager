@@ -8,7 +8,6 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
-
 app:
   security:
     client-id: onboarding_manager
