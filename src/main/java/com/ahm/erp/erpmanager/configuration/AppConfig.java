@@ -2,15 +2,14 @@ package com.ahm.erp.erpmanager.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.OAuth2Constants;
+import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.RealmResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
 
@@ -19,20 +18,9 @@ import javax.net.ssl.SSLException;
 public class AppConfig {
 
     private final AppProperties appProperties;
+    private final SecurityProperties securityProperties;
 
-    @Bean
-    public WebClient webClient() throws SSLException {
-        SslContext sslContext = SslContextBuilder
-                .forClient()
-                .trustManager(InsecureTrustManagerFactory.INSTANCE)
-                .build();
 
-        HttpClient httpClient = HttpClient.create().secure(sslContextSpec -> sslContextSpec.sslContext(sslContext));
-        return WebClient.builder()
-                .baseUrl(this.appProperties.getIamHost())
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .build();
-    }
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -40,4 +28,21 @@ public class AppConfig {
                 .registerModule(new JavaTimeModule());
         return objectMapper;
     }
+
+    @Bean
+    public Keycloak keycloakAdminClient() {
+        return KeycloakBuilder.builder()
+                .serverUrl(securityProperties .getIamHost())
+                .realm(securityProperties.getRealm())
+                .clientId(securityProperties.getClientId())
+                .clientSecret(securityProperties.getClientSecret())
+                .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
+                .build();
+    }
+
+    @Bean
+    RealmResource realmResource(Keycloak keycloak){
+        return keycloak.realm(securityProperties.getRealm());
+    }
+
 }

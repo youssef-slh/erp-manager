@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "b3f9d5e0-5a7c-4e8f-8c3e-9b7a1d2c3f4e",
+		"name": "ERP Manager Backend APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Postman collection for the Spring Boot ERP Manager backend APIs."
+	},
+	"item": [
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "Register Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an ADMIN_PUBLIC Keycloak token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyName\": \"OrgName1\",\n  \"domain\": \"org1.com\",\n  \"email\": \"contact@org1.com\",\n  \"phoneNumber\": \"123-456-7890\",\n  \"numberOfEmpRange\": \"1-10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"organizations"
+							]
+						},
+						"description": "Registers a new organization. Requires ADMIN_PUBLIC role."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Organizations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an authenticated Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/organizations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"organizations"
+							]
+						},
+						"description": "Retrieves all registered organizations."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Organization by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an authenticated Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/organizations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"organizations",
+								"1"
+							]
+						},
+						"description": "Retrieves a specific organization by its ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modules",
+			"item": [
+				{
+					"name": "Create Module",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires a MODULE_MANAGEMENT role Keycloak token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Finance Module\",\n  \"icon\": \"fa-money-bill-alt\",\n  \"description\": \"Manages financial operations\",\n  \"active\": true,\n  \"currency\": \"USD\",\n  \"price\": 100.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"modules"
+							]
+						},
+						"description": "Creates a new module. Requires MODULE_MANAGEMENT role."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Modules",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an authenticated Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/v1/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"modules"
+							]
+						},
+						"description": "Retrieves all available modules."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscribed Modules for Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an authenticated Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/v1/modules/organization/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"modules",
+								"organization",
+								"1"
+							]
+						},
+						"description": "Retrieves modules subscribed to a specific organization. Replace '1' with actual organization ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Subscribe Module to Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an ADMIN_PUBLIC or ORG_ADMIN Keycloak token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationId\": 1,\n  \"moduleId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/modules/subscribe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"modules",
+								"subscribe"
+							]
+						},
+						"description": "Subscribes a module to an organization. Replace IDs with actual values."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Invite User to Organization",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an ORG_ADMIN Keycloak token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"username\": \"john.doe\",\n  \"email\": \"john.doe@example.com\",\n  \"organizationId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/invite",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"invite"
+							]
+						},
+						"description": "Invites and registers a new user for a specific organization. Requires ORG_ADMIN role."
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Modules to User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an ORG_ADMIN Keycloak token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"moduleIds\": [1, 2] \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/john.doe/organizations/1/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"john.doe",
+								"organizations",
+								"1",
+								"modules"
+							]
+						},
+						"description": "Assigns a list of module IDs to a specific user within an organization. Replace keycloakUserId and organizationId with actual values."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Modules",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an authenticated Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/john.doe/organizations/1/modules",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"john.doe",
+								"organizations",
+								"1",
+								"modules"
+							]
+						},
+						"description": "Retrieves modules assigned to a specific user within an organization. Replace keycloakUserId and organizationId with actual values."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users by Organization",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{keycloakToken}}",
+								"description": "Requires an ADMIN_PUBLIC or ORG_ADMIN Keycloak token"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users/organization/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"organization",
+								"1"
+							]
+						},
+						"description": "Retrieves all users belonging to a specific organization. Replace '1' with actual organization ID."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "keycloakToken",
+			"value": "YOUR_KEYCLOAK_JWT_TOKEN",
+			"type": "string",
+			"description": "Replace with a valid Keycloak JWT token."
+		}
+	]
+}

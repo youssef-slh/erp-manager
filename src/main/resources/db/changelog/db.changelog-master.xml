@@ -19,26 +19,62 @@
             <column name="description" type="nvarchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="active" type="BIT" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="Double"/>
+            <column name="currency" type="varchar(50)"/>
         </createTable>
     </changeSet>
 
     <changeSet id="001-create-organization-table" author="youssef.saleh">
         <createTable tableName="ORGANIZATION">
             <column name="id" type="INT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="username" type="VARCHAR(255)" />
-            <column name="password" type="VARCHAR(255)" />
-            <column name="first_name" type="VARCHAR(255)" />
-            <column name="last_name" type="VARCHAR(255)" />
-            <column name="company_name" type="VARCHAR(255)" />
-            <column name="domain" type="VARCHAR(255)" />
-            <column name="icon" type="VARCHAR(5000)" />
-            <column name="description" type="TEXT" />
-            <column name="email" type="VARCHAR(255)" />
-            <column name="phone_number" type="VARCHAR(20)" />
-            <column name="number_of_emp_range" type="VARCHAR(50)" />
+            <column name="username" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="company_name" type="VARCHAR(255)"/>
+            <column name="domain" type="VARCHAR(255)"/>
+            <column name="icon" type="VARCHAR(5000)"/>
+            <column name="description" type="TEXT"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="phone_number" type="VARCHAR(20)"/>
+            <column name="number_of_emp_range" type="VARCHAR(50)"/>
         </createTable>
+    </changeSet>
+    <changeSet id="002-create-user-module-table" author="youssef.saleh">
+        <createTable tableName="USER_MODULE">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="keycloak_user_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="module_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="003-create-organization-module-table" author="youssef.saleh">
+        <createTable tableName="ORGANIZATION_MODULE">
+            <column name="organization_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_org_mod_organization" references="ORGANIZATION(id)"/>
+            </column>
+            <column name="module_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_org_mod_module" references="MODULE(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="organization_id, module_id" tableName="ORGANIZATION_MODULE"
+                       constraintName="pk_organization_module"/>
     </changeSet>
 
 </databaseChangeLog>

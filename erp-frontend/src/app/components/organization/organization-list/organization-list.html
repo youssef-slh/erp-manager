@@ -1,0 +1,59 @@
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Organizations</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Organizations</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">List of Registered Organizations</h3>
+                <div class="card-tools">
+                    <a routerLink="/organizations/register" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Add New Organization
+                    </a>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Company Name</th>
+                            <th>Domain</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Number of Employees</th>
+                            <th style="width: 120px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let org of organizations">
+                            <td>{{ org.id }}</td>
+                            <td>{{ org.companyName }}</td>
+                            <td>{{ org.domain }}</td>
+                            <td>{{ org.email }}</td>
+                            <td>{{ org.phoneNumber }}</td>
+                            <td>{{ org.numberOfEmpRange }}</td>
+                            <td>
+                                <a [routerLink]="['/organizations', org.id, 'modules', 'subscribe']" class="btn btn-info btn-sm">View Modules</a>
+                                <a [routerLink]="['/organizations', org.id, 'users']" class="btn btn-success btn-sm ml-1">Manage Users</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

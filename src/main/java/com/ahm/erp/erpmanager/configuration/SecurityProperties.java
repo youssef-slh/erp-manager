@@ -10,5 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class SecurityProperties {
     private String clientId;
     private String clientSecret;
-    private String iamTokenHost;
+    private String iamHost;
+    private String realm;
 }
