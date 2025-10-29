@@ -1,21 +1,16 @@
 package com.ahm.erp.erpmanager.service;
 
-import com.ahm.erp.erpmanager.dto.IAMOrganizationRequest;
 import com.ahm.erp.erpmanager.dto.KeyValueDTO;
 import com.ahm.erp.erpmanager.dto.OrganizationRegistrationRequest;
 import com.ahm.erp.erpmanager.dto.Response;
-import com.ahm.erp.erpmanager.exception.OrganizationRegistrationException;
 import com.ahm.erp.erpmanager.security.KeycloakIntegrationService;
-import com.ahm.erp.erpmanager.service.mapper.OrganizationMapper;
-import com.ahm.erp.erpmanager.util.JwtOrganizationUtils;
+import com.ahm.erp.erpmanager.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.keycloak.representations.idm.MemberRepresentation;
 import org.keycloak.representations.idm.MembershipType;
 import org.keycloak.representations.idm.OrganizationDomainRepresentation;
 import org.keycloak.representations.idm.OrganizationRepresentation;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +29,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public List<KeyValueDTO> getOrganizations() {
-        Map<String, String> organizations = JwtOrganizationUtils.extractOrganizations();
+        Map<String, String> organizations = JwtUtils.extractOrganizations();
 
         // Convert Map to List<KeyValueDTO>
         return organizations.entrySet().stream()

@@ -4,9 +4,6 @@ import com.ahm.erp.erpmanager.enums.Currency;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "MODULE")
@@ -21,13 +18,8 @@ public class Module {
     @Enumerated(EnumType.STRING)
     private Currency currency;
     private Double price;
+    private String tag;
+    private String version;
+    private String categories;
 
-    @ManyToMany
-    @JoinTable(name = "ORGANIZATION_MODULE",
-            joinColumns = @JoinColumn(name = "module_id"),
-            inverseJoinColumns = @JoinColumn(name = "organization_id"))
-    private Set<Organization> organizations = new HashSet<>();
-
-    @ManyToMany(mappedBy = "modules")
-    private Set<User> users = new HashSet<>();
 }

@@ -4,6 +4,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { isPlatformBrowser } from '@angular/common';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 
@@ -45,5 +46,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
       deps: [KeycloakService, PLATFORM_ID], // Inject PLATFORM_ID to check SSR
     },
+    provideAnimations(),
   ],
 };

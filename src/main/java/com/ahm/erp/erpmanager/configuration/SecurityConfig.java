@@ -33,6 +33,9 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // no sessions
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/api/v1/organizations").permitAll()
+                                .requestMatchers("/swagger-ui/*").permitAll()
+                                .requestMatchers("/v3/api-docs").permitAll()
+                                .requestMatchers("/v3/api-docs/*").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/modules").permitAll()
 //                        .requestMatchers(HttpMethod.POST,"/v1/modules").hasRole("MODULE_MANAGEMENT")
                                 .anyRequest().authenticated()

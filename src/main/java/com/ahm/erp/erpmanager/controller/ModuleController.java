@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.ahm.erp.erpmanager.entity.Module;
-import com.ahm.erp.erpmanager.dto.ModuleSubscriptionRequest;
 
 import java.util.List;
 
@@ -33,13 +32,14 @@ public class ModuleController implements ResponseHandler {
     }
 
     @GetMapping("/organization/{organizationId}")
-    public ResponseEntity<Response<List<Module>>> retrieveSubscribedModules(@PathVariable Integer organizationId) {
+    public ResponseEntity<Response<List<Module>>> retrieveSubscribedModules(@PathVariable String organizationId) {
         return ok(this.moduleService.retrieveSubscribedModules(organizationId));
     }
 
-    @PostMapping("/subscribe")
-    public ResponseEntity subscribe(@RequestBody ModuleSubscriptionRequest request) {
-        this.moduleService.subscribe(request);
+    @PostMapping("/subscribe/{organizationId}/{moduleId}")
+    public ResponseEntity subscribe(@PathVariable String organizationId, @PathVariable Integer moduleId) throws JsonProcessingException {
+        this.moduleService.subscribe(organizationId, moduleId);
         return ResponseEntity.noContent().build();
     }
+
 }

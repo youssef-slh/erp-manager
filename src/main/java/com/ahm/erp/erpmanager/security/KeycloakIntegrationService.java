@@ -22,7 +22,7 @@ public interface KeycloakIntegrationService {
 
     String registerUser(String orgId, UserRepresentation member);
 
-    void subscribeModuleInOrganizationAsAttribute(String orgId, Long moduleId, String moduleName);
+    void subscribeModuleInOrganizationAsAttribute(String orgId, Integer moduleId, String moduleName);
 
     OrganizationRepresentation getOrganizationRepresentationById(String orgId);
 

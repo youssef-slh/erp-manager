@@ -4,8 +4,7 @@ import com.ahm.erp.erpmanager.dto.IAMUserRegistrationRequest;
 import com.ahm.erp.erpmanager.exception.InvalidRequestException;
 import com.ahm.erp.erpmanager.exception.OrganizationAlreadyExistException;
 import com.ahm.erp.erpmanager.exception.UserAlreadyExistException;
-import com.ahm.erp.erpmanager.util.JwtOrganizationUtils;
-import com.ahm.erp.erpmanager.util.SecurityUtils;
+import com.ahm.erp.erpmanager.util.JwtUtils;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,7 +89,7 @@ public class KeycloakIntegrationServiceImpl implements KeycloakIntegrationServic
     }
 
     @Override
-    public void subscribeModuleInOrganizationAsAttribute(String orgId, Long moduleId, String moduleName) {
+    public void subscribeModuleInOrganizationAsAttribute(String orgId, Integer moduleId, String moduleName) {
 
         log.info("subscribing a new module [{}] in organization [{}]", moduleName, orgId);
 
@@ -109,7 +108,7 @@ public class KeycloakIntegrationServiceImpl implements KeycloakIntegrationServic
         String moduleJson = String.format("{\"id\":%d,\"name\":\"%s\"}", moduleId, moduleName);
         moduleJsonList.add(moduleJson);
 
-        attributes.put("modules", moduleJsonList);
+        attributes.put("module", moduleJsonList);
         orgRepr.setAttributes(attributes);
 
         orgResource.update(orgRepr);
@@ -281,7 +280,7 @@ public class KeycloakIntegrationServiceImpl implements KeycloakIntegrationServic
     public boolean isMemberInOrganization(String orgId) {
 
         getOrganizationRepresentationById(orgId);
-        Map<String, String> organizations = JwtOrganizationUtils.extractOrganizations();
+        Map<String, String> organizations = JwtUtils.extractOrganizations();
 
         return organizations.keySet()
                 .stream()
